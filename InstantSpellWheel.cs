@@ -1,22 +1,17 @@
-﻿using System.Collections;
-using UnityEngine;
-using ThunderRoad;
+﻿using ThunderRoad;
 
 namespace InstantSpellWheel
 {
-    public class InstantSpellWheel : LevelModule
+    public class InstantSpellWheel : ThunderScript
     {
-        private float sizeFadeDuration = 0.0f;
-
-        public override IEnumerator OnLoadCoroutine()
+        public override void ScriptLoaded(ModManager.ModData modData)
         {
-            foreach (var effect in Catalog.GetAllID(Catalog.Category.Effect))
+            base.ScriptLoaded(modData);
+            foreach (var effect in Catalog.GetAllID(Category.Effect))
                 if (effect.Contains("Orb"))
                     foreach (var module in Catalog.GetData<EffectData>(effect).modules)
                         if (module is EffectModuleMesh mesh)
-                            mesh.sizeFadeDuration = sizeFadeDuration;
-            Debug.Log("(Instant Spell Wheel) Loaded successfully!");
-            return base.OnLoadCoroutine();
+                            mesh.sizeFadeDuration = 0.0f;
         }
     }
 }
